@@ -1,2 +1,2 @@
-# lab-1
-lab work 1
+# mylab1
+mylab work 1
