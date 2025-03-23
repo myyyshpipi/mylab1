@@ -4,13 +4,16 @@
 
 package com.mycompany.mylab1;
 
-/**
- *
- * @author alex
- */
 public class Mylab1 {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        String fileName = "src/main/resources/Лаба_1 образцы данных.xlsx";
+
+
+
     }
+
+
+
+
 }
