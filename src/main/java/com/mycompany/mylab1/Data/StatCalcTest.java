@@ -54,9 +54,11 @@ public class StatCalcTest
                 statData.calcStatistics();
                 statData.calcConfidenceInterval(0.03);
                 for(String h: headerNames) {
-                    Double[] colOther = excelReader.getColumnData(sheetNameOut, h);
-                    String covName = header + "-" + h;
-                    statData.calcCovariance(covName, colData, colOther);
+                    if(!header.equals(h)) {
+                        Double[] colOther = excelReader.getColumnData(sheetNameOut, h);
+                        String covName = header + "-" + h;
+                        statData.calcCovariance(covName, colData, colOther);
+                    }
                 }
             }
             System.out.println(statData.toString() );

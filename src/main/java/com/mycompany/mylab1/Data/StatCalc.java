@@ -70,7 +70,8 @@ public class StatCalc {
             throw new IllegalArgumentException("Значение доверительного уровня должен быть между 0 и 1.");
         }
         TDistribution tDist = new TDistribution(stats.getN()-1);
-        double a = tDist.inverseCumulativeProbability(1-confidenceLevel/2);
+        double a = tDist.inverseCumulativeProbability(1-confidenceLevel/2); // Inverse cumulative probability or quantile functions
+        this.results.put("quantile functions (альфа " + confidenceLevel + ")", a);
         double confidenceValue = a * stats.getStandardDeviation()/Math.sqrt(stats.getN());
         String confidenceKey = "доверительный интервал (альфа " + confidenceLevel + ")";
         this.results.put(confidenceKey, confidenceValue);
