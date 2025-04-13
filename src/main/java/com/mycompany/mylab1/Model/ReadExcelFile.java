@@ -1,4 +1,4 @@
-package com.mycompany.mylab1.Data;
+package com.mycompany.mylab1.Model;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -13,16 +13,8 @@ public class ReadExcelFile {
     private Workbook workbook;
 
     // Конструктор класса
-    public ReadExcelFile(String pathname) throws IOException {
-
-        File file = new File(pathname);
-
-        if (!file.exists()) {
-            throw new IllegalArgumentException("Файл не найден : " + pathname);
-        }
-
-        FileInputStream fis = new FileInputStream(file);
-
+    public ReadExcelFile(FileInputStream fis) throws IOException {
+        //FileInputStream fis = new FileInputStream(file);
         this.workbook = new XSSFWorkbook(fis); // Для .xlsx файлов
     }
 
@@ -168,6 +160,37 @@ public class ReadExcelFile {
 
         // Преобразуем список в массив
         return columnData.toArray(new Double[0]);
+    }
+
+    public List<Double> getColumnListData(String sheetName, String columnName) {
+
+        Sheet sheet = workbook.getSheet(sheetName);
+
+        if (sheet == null) {
+            throw new IllegalArgumentException("Вкладки : " + sheetName + " - нет");
+        }
+
+        Row headerRow = sheet.getRow(0); // Первая строка считается заголовком
+        if (headerRow == null) {
+            throw new IllegalStateException("Первая строка отсутствует во вкладке : " + sheetName);
+        }
+
+        // Находим индекс колонки по её имени
+        int columnIndex = getColumnIndex(sheetName, columnName);
+
+        // Собираем данные из колонки
+        List<Double> columnData = new ArrayList<>();
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            Row row = sheet.getRow(i);
+            if (row == null) {
+                continue; // Пропускаем пустые строки
+            }
+            Cell cell = row.getCell(columnIndex);
+            columnData.add(getCellValueAsDouble(cell));
+        }
+
+        // Преобразуем список в массив
+        return columnData;
     }
 
     // Метод для закрытия рабочей книги

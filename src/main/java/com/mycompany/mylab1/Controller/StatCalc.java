@@ -1,4 +1,4 @@
-package com.mycompany.mylab1.Data;
+package com.mycompany.mylab1.Controller;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.math3.distribution.TDistribution;
 import org.apache.commons.math3.stat.correlation.Covariance;

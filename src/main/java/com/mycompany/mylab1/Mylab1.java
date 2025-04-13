@@ -4,9 +4,16 @@
 
 package com.mycompany.mylab1;
 
+import com.mycompany.mylab1.Model.*;
+import com.mycompany.mylab1.View.*;
+import com.mycompany.mylab1.Controller.*;
+
 public class Mylab1 {
 
     public static void main(String[] args) {
-        String fileName = "src/main/resources/Лаба_1 образцы данных.xlsx";
+        Model model = new Model();
+        MainFrame view = new MainFrame();
+        Controller controller =  new Controller(model, view);
+
     }
 }
