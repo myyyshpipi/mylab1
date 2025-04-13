@@ -1,4 +1,4 @@
-package com.mycompany.mylab1.MainWindow;
+package com.mycompany.mylab1.View;
 
 public class MainFrameTest {
     public static void main(String[] args) {

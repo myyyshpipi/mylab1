@@ -1,6 +1,10 @@
-package com.mycompany.mylab1.Data;
+package com.mycompany.mylab1.Controller;
 
 
+import com.mycompany.mylab1.Model.ReadExcelFile;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -11,7 +15,8 @@ public class StatCalcTest
 
         String pathname = "src/main/resources/Лаба_1 образцы данных.xlsx";
         try {
-            ReadExcelFile excelReader = new ReadExcelFile(pathname);
+            ReadExcelFile excelReader = new ReadExcelFile(new FileInputStream( new File(pathname))
+            );
             excelReader.getSheetNames();
 
             String[] sheetsArray = new String[excelReader.getSheetNames().size()];
