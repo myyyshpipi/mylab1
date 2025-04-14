@@ -10,9 +10,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 import javax.swing.*;
 import java.io.File;
@@ -22,7 +19,6 @@ import java.io.IOException;
 import java.util.*;
 
 public class Controller {
-    private static final Logger log = LoggerFactory.getLogger(Controller.class);
     private Model model;
     private MainFrame view;
     private JFileChooser fileChooser;
