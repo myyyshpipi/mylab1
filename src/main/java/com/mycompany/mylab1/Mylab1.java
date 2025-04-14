@@ -14,6 +14,7 @@ public class Mylab1 {
         Model model = new Model();
         MainFrame view = new MainFrame();
         new Controller(model, view);
+        //
 
     }
 }
