@@ -94,7 +94,6 @@ public class Controller {
         String selectedSheet = (String) view.getDatasetSelector().getSelectedItem();
         if (selectedSheet != null) {
             try {
-                //double average = model.calculateAverage(selectedDataset);
                 view.showResult(selectedSheet);
             } catch (Exception e) {
                 view.showError(e.getMessage());
@@ -150,7 +149,7 @@ public class Controller {
             model.getDataStorage().addResult( header, "минимум", stats.getMin());
         }
 
-        System.out.println(model.getDataStorage().getAllResults());
+        //System.out.println(model.getDataStorage().getAllResults());
         model.getDataStorage().printResultDataSorted();
 
 
