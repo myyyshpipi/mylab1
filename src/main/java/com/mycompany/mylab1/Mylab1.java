@@ -13,7 +13,7 @@ public class Mylab1 {
     public static void main(String[] args) {
         Model model = new Model();
         MainFrame view = new MainFrame();
-        Controller controller =  new Controller(model, view);
+        new Controller(model, view);
 
     }
 }

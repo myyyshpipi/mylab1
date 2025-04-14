@@ -6,15 +6,15 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.math3.distribution.TDistribution;
 import org.apache.commons.math3.stat.correlation.Covariance;
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class Controller {
+    private static final Logger log = LoggerFactory.getLogger(Controller.class);
     private Model model;
     private MainFrame view;
     private JFileChooser fileChooser;
@@ -184,9 +185,7 @@ public class Controller {
 
         DataStorage storage = model.getDataStorage();
 
-        Map<String, Map<String, Double>> sortedResults = new TreeMap<>(storage.getOutputResults());
-
-
+        Map<String, Map<String, Double>> sortedResults = new TreeMap<>(storage.getAllResults());
 
         if (storage.getAllResults().isEmpty()) {
             view.showError("No results to save");
@@ -200,116 +199,20 @@ public class Controller {
 
             try (FileOutputStream fos = new FileOutputStream(file);
                 Workbook workbook = new XSSFWorkbook()) {
-                String sheetResults = view.getDatasetSelector().getSelectedItem().toString();
-                Sheet sheet = workbook.createSheet( sheetResults + " - расчеты");
 
 
-
-                // Заголовок таблицы
-                int rowNum = 0;
-                int colNum = 0;
-                int colNum1 = 0;
-                int colNum2 = 0;
-                Row headerRow = sheet.createRow(rowNum);
-                for(String dataset : sortedResults.keySet()) {
-                    colNum1 = colNum*2 + 0;
-                    colNum2 = colNum*2 + 1;
-                    headerRow.createCell(colNum1).setCellValue("Key -" + dataset);
-                    headerRow.createCell(colNum2).setCellValue("Value - " + dataset);
-                    colNum++;
-                }
-
-
-
-                colNum = 0;
-                colNum1 = 0;
-                colNum2 = 0;
-                for (Map.Entry<String, Map<String, Double>> dataset : sortedResults.entrySet()) {
-                    System.out.println("Выборка: " + dataset.getKey());
-                    // Создаем TreeMap для сортировки ключей второго уровня
-                    Map<String, Double> sortedData = new TreeMap<>(dataset.getValue());
-                    rowNum = 1;
-                    colNum1 = colNum*2 + 0;
-                    colNum2 = colNum*2 + 1;
-                    colNum++;
-                    sheet.autoSizeColumn(colNum1);
-                    sheet.autoSizeColumn(colNum2);
-
-                    Row row = sheet.createRow(rowNum);
-                    Cell cell1 = row.createCell(colNum1);
-                    Cell cell2 = row.createCell(colNum2);
-
-                    for (Map.Entry<String, Double> entry : sortedData.entrySet()) {
-                        System.out.println("  Параметр: " + entry.getKey() + ", Значение: " + entry.getValue());
-                        row.setRowNum(rowNum++);
-                        cell1.setCellValue(entry.getKey());
-                        cell2.setCellValue(entry.getValue());
-
-
-                        //row1.getCell(colNum1).setCellValue(entry.getKey());
-                        //row1.getCell(colNum2).setCellValue(entry.getValue());
-                    }
-
-                }
-
-                /*
-                colNum = 0;
-                for (Map.Entry<String, HashMap<String, Double>> entry : storage.getOutputResults().entrySet()) {
+                for (Map.Entry<String, HashMap<String, Double>> entry : storage.getAllResults().entrySet()) {
                     String dataset = entry.getKey();
-                    rowNum = 1;
-                    for (Map.Entry<String, Double> result : entry.getValue().entrySet()) {
-
-                        colNum1 = colNum * 2 + 0;
-                        colNum2 = colNum * 2 + 1;
-                        Row row = sheet.createRow(rowNum++);
-                        //row.createCell(0).setCellValue(dataset);
-                        row.createCell(colNum1).setCellValue(result.getKey());
-                        row.createCell(colNum2).setCellValue(result.getValue());
-                    }
-                }
-                */
-
-
-
-                /*
-                int colNum = 0;
-                for(String dataset : storage.getResultsNames()) {
-
-                    System.out.println("ResultsName : " + dataset);
-
+                    Sheet sheet = workbook.createSheet( dataset + " - расчеты");
+                    int colNum = 0;
                     int rowNum = 0;
-                    int colNum1 = colNum*2 + 0;
-                    int colNum2 = colNum*2 + 1;
-                    sheet.autoSizeColumn(colNum1);
-                    sheet.autoSizeColumn(colNum2);
-                    Row row = sheet.createRow(rowNum);
-
-
-                    for(String datakey : storage.getResultsKeys(dataset)){
-                        row.setRowNum(rowNum);
-
+                    for (Map.Entry<String, Double> result : entry.getValue().entrySet()) {
+                        Row row = sheet.createRow(rowNum);
+                        row.createCell(colNum).setCellValue( result.getKey().toString() );
+                        row.createCell(colNum+1).setCellValue( result.getValue().toString());
                         rowNum++;
-                        System.out.println("rowNum : " + rowNum +" colNum1 : " + colNum1 +" colNum2 : " + colNum2);
-                        System.out.println("ResultsKey : " + datakey + " ResultsView : " + storage.getResultValue(dataset,datakey));
-
-                        Cell cell1 = row.createCell(colNum1);
-                        Cell cell2 = row.createCell(colNum2);
-                        cell1.setCellValue(datakey);
-                        cell2.setCellValue(storage.getResultValue(dataset,datakey));
-                        //row.createCell(colNum2).setCellValue(storage.getResultValue(dataset,datakey));
-
                     }
-                    colNum++;
                 }
-                */
-
-                //rowNum = 1;
-                //for (Map.Entry<String, Double> entry : storage.getAllResults().entrySet()) {
-                //    Row row = sheet.createRow(rowNum++);
-                //    row.createCell(0).setCellValue(entry.getKey());
-                //    row.createCell(1).setCellValue(entry.getValue());
-                //}
-
                 workbook.write(fos);
                 view.showResult("Results saved to " + file.getName());
 
