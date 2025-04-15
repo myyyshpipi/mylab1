@@ -19,9 +19,9 @@ public class DataStorage {
         return inputDatasets.get(keyDataSet);
     }
 
-    public Double[] getDatasetArray(String keyDataSet) {
-        return inputDatasets.get(keyDataSet).toArray(new Double[0]);
-    }
+//    public Double[] getDatasetArray(String keyDataSet) {
+//        return inputDatasets.get(keyDataSet).toArray(new Double[0]);
+//    }
 
     public Map<String, List<Double>> getAllDatasets() {
         return inputDatasets;
@@ -37,40 +37,40 @@ public class DataStorage {
         outputResults.put(keyDataset, innerMap);
     }
 
-    public double getResult(String keyDataset, String keyResultData) {
-        return outputResults.getOrDefault(keyDataset, new HashMap<>()).get(keyResultData);
-    }
+//    public double getResult(String keyDataset, String keyResultData) {
+//        return outputResults.getOrDefault(keyDataset, new HashMap<>()).get(keyResultData);
+//    }
 
-    public List<String> getDatasetNames() {
-        return new ArrayList<>(inputDatasets.keySet());
-    }
+//    public List<String> getDatasetNames() {
+//        return new ArrayList<>(inputDatasets.keySet());
+//    }
 
-    public List<String> getResultsNames() {
-        return new ArrayList<>(outputResults.keySet());
-    }
+//    public List<String> getResultsNames() {
+//        return new ArrayList<>(outputResults.keySet());
+//    }
 
-    public List<String> getResultsKeys(String keyDataset) {
-        return new ArrayList<>(outputResults.get(keyDataset).keySet());
-    }
-    public List<Double> getResultsValues(String keyDataset) {
-        return new ArrayList<>(outputResults.get(keyDataset).values());
-    }
+//    public List<String> getResultsKeys(String keyDataset) {
+//        return new ArrayList<>(outputResults.get(keyDataset).keySet());
+//    }
+//    public List<Double> getResultsValues(String keyDataset) {
+//        return new ArrayList<>(outputResults.get(keyDataset).values());
+//    }
 
-    public HashMap<String, Double> getResultsEntry(String keyDataset) {
-        HashMap<String, Double> datasetResults = outputResults.get(keyDataset);
-        if (datasetResults == null || datasetResults.isEmpty()) {
-            throw new IllegalStateException("No data for datasetRESULTS: " + keyDataset);
-        }
-        return datasetResults;
-    }
+//    public HashMap<String, Double> getResultsEntry(String keyDataset) {
+//        HashMap<String, Double> datasetResults = outputResults.get(keyDataset);
+//        if (datasetResults == null || datasetResults.isEmpty()) {
+//            throw new IllegalStateException("No data for datasetRESULTS: " + keyDataset);
+//        }
+//        return datasetResults;
+//    }
 
-    public int getResultsEntrySize(String keyDataset) {
-        return outputResults.get(keyDataset).size();
-    }
+//    public int getResultsEntrySize(String keyDataset) {
+//        return outputResults.get(keyDataset).size();
+//    }
 
-    public int getResultsSize() {
-        return outputResults.size();
-    }
+//    public int getResultsSize() {
+//        return outputResults.size();
+//    }
 
     public Map<String, HashMap<String, Double>> getAllResults() {
         return outputResults;
